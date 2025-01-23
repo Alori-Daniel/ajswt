@@ -44,7 +44,7 @@ const OnBoardingItem = ({ item, width, height, paginator, currentIndex }) => {
                 style={{ flex: 1 }}
             >
 
-                <View className="" style={{ height: height, justifyContent: 'flex-end', padding: 19, gap: 3 }}  >
+                <View className="" style={{ height: height, justifyContent: 'flex-end', padding: 19, gap: 3, border: "1px solid black" }}  >
                     <View className=" text-white ">
                         <Text className="text-white text-[24px] font-Rsemibold font-bold mb-4 w-[90%]">{item.title}</Text>
                         <Text className="text-white text-[16px] mb-1 font-medium">{item.subtitle}</Text>
@@ -53,7 +53,7 @@ const OnBoardingItem = ({ item, width, height, paginator, currentIndex }) => {
                     </View>
                     {currentIndex >= 0 ?
                         (
-                            <Animated.View className="mt-6 flex-row items-center mx-auto gap-9"
+                            <Animated.View className="mt-2 flex-row items-center mx-auto gap-9 mb-14"
                                 style={{
                                     opacity: opacity,
                                     transform: [{ translateY }],

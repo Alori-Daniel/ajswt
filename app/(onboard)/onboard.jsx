@@ -1,8 +1,8 @@
-import { View, Text, FlatList, useWindowDimensions, Animated } from 'react-native'
+import { View, Text, FlatList, useWindowDimensions, Animated, StatusBar } from 'react-native'
 import React, { useState, useRef } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import onBoardingData from '../../constants/data'
-import OnBoardingItem from '../../components/OnBoardingItem'
+import OnBoardingItem from '../../components/onBoardingItem'
 import Paginator from '../../components/Paginator'
 
 const Onboard = () => {
@@ -18,9 +18,9 @@ const Onboard = () => {
     const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
 
     return (
-        <SafeAreaView className="h-full ">
+        <SafeAreaView edges={["top"]} style={{ flex: 1 }} >
             <View style={{ width: width, height: height }} className="relative">
-                <View className="absolute top-[69%] self-center z-20">
+                <View className="absolute top-[62%] self-center z-20">
                     <Paginator data={onBoardingData} currentIndex={currentIndex} />
                 </View>
 
