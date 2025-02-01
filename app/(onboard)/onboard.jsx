@@ -4,18 +4,23 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import onBoardingData from '../../constants/data'
 import OnBoardingItem from '../../components/onBoardingItem'
 import Paginator from '../../components/Paginator'
+import { useGlobalContext } from '../../context/GlobalProvider'
+import { Redirect } from 'expo-router'
 
 const Onboard = () => {
     const { width, height } = useWindowDimensions();
     const [currentIndex, setCurrentIndex] = useState(0)
     const slidesRef = useRef(null);
     const scrollX = useRef(new Animated.Value(0)).current;
+    const { isLoading, isloggedIn } = useGlobalContext()
 
     const viewableItemsChanged = useRef(({ viewableItems }) => {
         setCurrentIndex(viewableItems[0].index);
     }).current;
 
     const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
+
+    if (!isLoading && isloggedIn) return <Redirect href="/home" />
 
     return (
         <SafeAreaView edges={["top"]} style={{ flex: 1 }} >

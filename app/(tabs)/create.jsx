@@ -2,17 +2,16 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-
-const Home = () => {
+const Create = () => {
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView>
             <View>
-                <Text>home</Text>
+                <Text>create</Text>
             </View>
         </SafeAreaView>
     )
 }
 
-export default Home
+export default Create
 
 const styles = StyleSheet.create({})

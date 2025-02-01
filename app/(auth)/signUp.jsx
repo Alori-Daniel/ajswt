@@ -1,12 +1,16 @@
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, Alert } from 'react-native'
 import React, { useState } from 'react'
 import CustomButton from '../../components/CustomButton'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FormField from '../../components/FormField'
 import { router } from 'expo-router';
+import { createUser } from '../../lib/appwrite'
+import { useGlobalContext } from '../../context/GlobalProvider'
+
 
 
 const SignUp = () => {
+    const { setisloggedIn, setUser, user } = useGlobalContext()
     const [form, setform] = useState({
         username: "",
         email: "",
@@ -15,6 +19,20 @@ const SignUp = () => {
         number: "",
 
     });
+
+    const submit = async () => {
+        try {
+            const result = await createUser(form.email, form.password, form.username, form.number)
+            setUser(result)
+            setisloggedIn(true);
+            router.replace("/home")
+
+        } catch (error) {
+            Alert.alert('Error', error.message)
+        } finally {
+
+        }
+    }
     return (
         <SafeAreaView className="bg-[#181818]" style={{ flex: 1 }}>
             <ScrollView>
@@ -39,6 +57,14 @@ const SignUp = () => {
                             keyboardType="email-address"
                         />
                         <FormField
+                            title="Username"
+                            value={form.username}
+                            handleChangeText={(e) => setform({ ...form, username: e })}
+                            otherStyles="mt-5"
+                            placeholder="enter a username"
+                            keyboardType="email-address"
+                        />
+                        <FormField
                             title="Phone Number"
                             value={form.number}
                             handleChangeText={(e) => setform({ ...form, number: e })}
@@ -55,7 +81,7 @@ const SignUp = () => {
                             keyboardType="email-address"
                         />
                         <FormField
-                            title="Confirm Password"
+                            title="Password"
                             value={form.confirmPassword}
                             handleChangeText={(e) => setform({ ...form, confirmPassword: e })}
                             otherStyles="mt-5"
@@ -64,7 +90,7 @@ const SignUp = () => {
                         />
                         <Text className="text-white text-center mt-7 ">By signing in, you agree to out Terms of Service and Privacy Policy</Text>
 
-                        <CustomButton containerStyles="w-full bg-[#3236F9] mt-[5rem] h-[50px] rounded-full" title="Login" textStyles="text-lg font-bold text-white" />
+                        <CustomButton containerStyles="w-full bg-[#3236F9] mt-[5rem] h-[50px] rounded-full" title="Sign Up" textStyles="text-lg font-bold text-white" handlePress={() => submit()} />
 
                     </View>
 

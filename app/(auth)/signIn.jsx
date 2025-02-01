@@ -1,9 +1,12 @@
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, Alert } from 'react-native'
 import React, { useState } from 'react'
 import CustomButton from '../../components/CustomButton'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FormField from '../../components/FormField'
 import { router } from 'expo-router';
+import { getCurrentUser, signIn } from '../../lib/appwrite'
+import { useGlobalContext } from '../../context/GlobalProvider'
+
 
 
 const SignIn = () => {
@@ -12,6 +15,24 @@ const SignIn = () => {
         email: "",
         password: "",
     });
+    const { setisloggedIn, setUser, user } = useGlobalContext()
+
+
+    const submit = async () => {
+        try {
+            // Alert.alert("clicked")
+            await signIn(form.email, form.password)
+            const result = await getCurrentUser()
+            setUser(result)
+            setisloggedIn(true);
+            router.replace("/home")
+
+        } catch (error) {
+            Alert.alert('Error', error.message)
+        } finally {
+
+        }
+    }
     return (
         <SafeAreaView className="bg-[#181818]" style={{ flex: 1 }}>
             <ScrollView>
@@ -49,7 +70,7 @@ const SignIn = () => {
                             keyboardType="email-address"
                         />
                         <Text className="text-[#CBCBCB] self-end">Forgot Password?</Text>
-                        <CustomButton containerStyles="w-full bg-[#3236F9] mt-[4rem] h-[50px] rounded-full" title="Login" textStyles="text-lg font-bold text-white" />
+                        <CustomButton containerStyles="w-full bg-[#3236F9] mt-[4rem] h-[50px] rounded-full" title="Login" textStyles="text-lg font-bold text-white" handlePress={() => submit()} />
                         <Text className="text-white text-center ">By signing in, you agree to out Terms of Service and Privacy Policy</Text>
 
                     </View>
